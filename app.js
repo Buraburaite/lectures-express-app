@@ -6,9 +6,12 @@ const app            = express();
 const expressLayouts = require('express-ejs-layouts');
 const engine         = require('express-ejs-layouts');
 const bodyParser     = require('body-parser');
+const morgan         = require('morgan');
 app.use(express.static('public'));
 app.use(expressLayouts);
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(myFakeMiddleware);
+app.use(morgan('dev'));
 app.set('layout', 'layouts/main-layout');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -26,15 +29,28 @@ app.get('/', (req, res, next) => {
   res.render('index', data);
 });
 
+app.get('/test', (req, res) => {
+  res.send("We made it to test!");
+});
+
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
 app.post('/login', (req, res) => {
+  // What ES6 feature could we use to clean these two lines up?
   let email    = req.body.email;
   let password = req.body.password;
 
-  res.send(`Email: ${email}, Password: ${password}`);
+  let msg;
+  if (email === "ironhacker@gmail.com" && password === "password"){
+    msg = "Welcome!";
+  } else {
+    msg = "Go Away, you stink";
+  }
+
+  res.send(msg);
+
 });
 
 app.get('/get-user-info', (req, res) => {
@@ -80,6 +96,13 @@ app.get('/hello', (req, res, next) => {
     </html>
   `);
 });
+
+
+function myFakeMiddleware(){
+  console.log("myFakeMiddleware was called!");
+  req.secretValue = "swordfish";
+  next();
+}
 
 app.listen(3000, () => {
   console.log('My first app listening on port 3000!');
