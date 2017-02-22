@@ -9,14 +9,26 @@ app.set('view engine', 'ejs');
 
 // our first Route
 app.get('/', (req, res, next) => {
+  let data = {
+    name: "Ironhacker",
+    bootcamp: "IronHack WebDev"
+  };
   // send views/index.ejs for displaying in the browser
-  res.render('index');
+  res.render('index', data);
 });
 
 // my second Route
 app.get('/about', (req, res, next) => {
   // send views/index.ejs for displaying in the browser
   res.render('about');
+});
+
+app.get('/foods', (req, res, next) => {
+  let data = {
+    foods : ['Mac & Cheese', 'Sashimi', 'Pizza', 'Potato Salad', 'Pad Thai']
+  };
+
+  res.render('foods', data);
 });
 
 app.get('/hello', (req, res, next) => {
