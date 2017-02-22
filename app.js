@@ -3,16 +3,21 @@ const express = require('express');
 // We create our own server named app
 // Express server handling requests and responses
 const app = express();
+const expressLayouts = require('express-ejs-layouts');
 app.use(express.static('public'));
+app.use(expressLayouts);
+app.set('layout', 'layouts/main-layout');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // our first Route
 app.get('/', (req, res, next) => {
   let data = {
-    name: "Ironhacker",
-    bootcamp: "IronHack WebDev"
-  };
+      name: "Ironhacker",
+      age: 5,
+      country: "US",
+      citiesTraveled: ["Miami", "Madrid", "Barcelona"]
+    };
   // send views/index.ejs for displaying in the browser
   res.render('index', data);
 });
