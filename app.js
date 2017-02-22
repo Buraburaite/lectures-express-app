@@ -16,10 +16,27 @@ app.get('/', (req, res, next) => {
       name: "Ironhacker",
       age: 5,
       country: "US",
-      citiesTraveled: ["Miami", "Madrid", "Barcelona"]
+      citiesTraveled: ["Miami", "Madrid", "Barcelona"],
+      users: ["Bob", "Mary", "Ted"]
     };
   // send views/index.ejs for displaying in the browser
   res.render('index', data);
+});
+
+app.get('/get-user-info', (req, res) => {
+  res.render('user-info-form');
+});
+
+app.get('/display-user-info', (req, res) => {
+  let name      = req.query.name;
+  let age       = req.query.age;
+  let superhero = req.query.superhero;
+
+  res.send(`
+    Your name is ${name}
+    Your age is ${age}
+    Your favorite superhero is ${superhero}
+  `);
 });
 
 // my second Route

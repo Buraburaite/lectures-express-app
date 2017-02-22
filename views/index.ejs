@@ -8,3 +8,11 @@ Would you care for some
 <% } else { %>
   juice?
 <% } %>
+
+<ul>
+  <% users.forEach((user) => { %>
+    <li>
+      <a href="/users/<%= user %>"> <%= user %> </a>
+    </li>
+  <%  }) %>
+</ul>
