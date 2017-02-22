@@ -2,10 +2,13 @@ const express = require('express');
 
 // We create our own server named app
 // Express server handling requests and responses
-const app = express();
+const app            = express();
 const expressLayouts = require('express-ejs-layouts');
+const engine         = require('express-ejs-layouts');
+const bodyParser     = require('body-parser');
 app.use(express.static('public'));
 app.use(expressLayouts);
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('layout', 'layouts/main-layout');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -21,6 +24,17 @@ app.get('/', (req, res, next) => {
     };
   // send views/index.ejs for displaying in the browser
   res.render('index', data);
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login', (req, res) => {
+  let email    = req.body.email;
+  let password = req.body.password;
+
+  res.send(`Email: ${email}, Password: ${password}`);
 });
 
 app.get('/get-user-info', (req, res) => {
